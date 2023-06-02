@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,16 +33,16 @@ public class UserController {
 	private final UserService userService;
 
 	@PostMapping
-	public ResponseEntity<APIResponseDTO> addUser(@RequestBody CreateUserForm userForm) {
+	public ResponseEntity<APIResponseDTO> addUser(@Validated @RequestBody CreateUserForm userForm) {
 
-		APIResponseDTO apiResponse = userService.addUser(userForm);
+		var apiResponse = userService.addUser(userForm);
 		return new ResponseEntity<>(apiResponse, HttpStatus.valueOf(apiResponse.getStatus()));
 	}
 
 	@GetMapping("/name/{name}")
 	public ResponseEntity<APIResponseDTO> getUserByUserName(@PathVariable String name) {
 
-		APIResponseDTO apiResponse = userService.getUserByUserName(name);
+		var apiResponse = userService.getUserByUserName(name);
 		return new ResponseEntity<>(apiResponse, HttpStatus.valueOf(apiResponse.getStatus()));
 	}
 
@@ -49,14 +50,14 @@ public class UserController {
 	public ResponseEntity<APIResponseDTO> getUsers(@RequestParam(name = "page",defaultValue = "0") final Integer page,
 			@RequestParam(name = "size",defaultValue = "10") final Integer size) {
 		log.info("getuser");
-		APIResponseDTO apiResponse = userService.getUsers(page,size);
+		var apiResponse = userService.getUsers(page,size);
 		return new ResponseEntity<>(apiResponse, HttpStatus.valueOf(apiResponse.getStatus()));
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<APIResponseDTO> getUserById(@PathVariable final Long id) {
+	public ResponseEntity<APIResponseDTO> getUserById(@PathVariable("id") final Long id) {
 
-		APIResponseDTO apiResponse = userService.getUserById(id);
+		var apiResponse = userService.getUserById(id);
 		return new ResponseEntity<>(apiResponse, HttpStatus.valueOf(apiResponse.getStatus()));
 
 	}
@@ -64,22 +65,22 @@ public class UserController {
 	@DeleteMapping
 	public ResponseEntity<APIResponseDTO> deleteUserById(@RequestBody final List<Long> ids) {
 
-		APIResponseDTO apiResponse = userService.deleteUserById(ids);
+		var apiResponse = userService.deleteUserById(ids);
 		return new ResponseEntity<>(apiResponse, HttpStatus.valueOf(apiResponse.getStatus()));
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<APIResponseDTO> updateUser(@PathVariable("id") final Long id,
+	public ResponseEntity<APIResponseDTO> updateUser(@PathVariable("id") final Long id,@Validated
 			@RequestBody CreateUserForm userForm) {
 
-		APIResponseDTO apiResponse = userService.updateUser(id, userForm);
+		var apiResponse = userService.updateUser(id, userForm);
 		return new ResponseEntity<>(apiResponse, HttpStatus.valueOf(apiResponse.getStatus()));
 	}
 
 	@GetMapping("/pas/{pass}")
 	public ResponseEntity<APIResponseDTO> deleteUserById(@PathVariable("pass") String pass) {
 
-		APIResponseDTO apiResponse = userService.getUserNameAndPassowrd(pass);
+		var apiResponse = userService.getUserNameAndPassowrd(pass);
 		return new ResponseEntity<>(apiResponse, HttpStatus.valueOf(apiResponse.getStatus()));
 	}
   

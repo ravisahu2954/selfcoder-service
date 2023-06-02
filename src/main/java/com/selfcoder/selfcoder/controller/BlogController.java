@@ -2,6 +2,7 @@ package com.selfcoder.selfcoder.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +30,7 @@ public class BlogController {
 	private final BlogService blogService;
 	
 	@PostMapping
-	public ResponseEntity<APIResponseDTO> addBlog(@RequestBody CreateBlogForm createBlogForm)
+	public ResponseEntity<APIResponseDTO> addBlog(@Validated @RequestBody CreateBlogForm createBlogForm)
 	{
 	    log.info("addblog");
 		APIResponseDTO response = blogService.addBlog(createBlogForm);
@@ -44,7 +45,7 @@ public class BlogController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<APIResponseDTO> getBlogs(@PathVariable Long id)
+	public ResponseEntity<APIResponseDTO> getBlogs(@Validated @PathVariable Long id)
 	{
 		APIResponseDTO response = blogService.getBlogsById(id);
 		return new ResponseEntity<>(response,HttpStatus.valueOf(response.getStatus()));

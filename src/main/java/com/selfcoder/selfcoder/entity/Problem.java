@@ -40,6 +40,6 @@ public class Problem {
 	private String difficulty;
 	
 	@Column(nullable = false)
-	private String frequency;
+	private String solution;
 	
 }

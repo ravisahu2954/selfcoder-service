@@ -6,10 +6,12 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class CreateCourseForm {
+public class CreateCommentForm {
 
-	 @NotBlank(message = "course name is required")
-	 private String courseName;
+	@NotBlank
+    private Long userId;
+	
+	@NotBlank
+	private String msg;
 	
 }
-

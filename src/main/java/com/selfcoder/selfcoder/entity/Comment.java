@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.selfcoder.selfcoder.form.UpdateCommentForm;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,10 +26,10 @@ public class Comment {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
-	@Column
+	@Column(nullable = false) 
 	private Long userId;
 	
-	@Column
+	@Column(nullable = false)
 	private String msg;
 	
 	@CreationTimestamp
@@ -35,4 +37,14 @@ public class Comment {
 	
 	@UpdateTimestamp
 	private LocalDate updateAt;
+
+	public static Comment convertCreateCommentFormToComment(Long id2, UpdateCommentForm updateCommentForm) {
+
+		var comment = new Comment();
+		comment.setId(id2);
+		comment.setUserId(updateCommentForm.getUserId());
+		comment.setMsg(updateCommentForm.getMsg());
+		return comment;
+	
+	}
 }

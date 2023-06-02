@@ -11,17 +11,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.selfcoder.selfcoder.constant.UserConstant;
 import com.selfcoder.selfcoder.dto.APIResponseDTO;
 import com.selfcoder.selfcoder.dto.UserDTO;
 import com.selfcoder.selfcoder.entity.Blog;
+import com.selfcoder.selfcoder.entity.Course;
 import com.selfcoder.selfcoder.entity.Problem;
 import com.selfcoder.selfcoder.entity.User;
-import com.selfcoder.selfcoder.entity.Course;
-
 import com.selfcoder.selfcoder.exception.CustomBadRequestException;
 import com.selfcoder.selfcoder.exception.ProblemAlreadyExistException;
 import com.selfcoder.selfcoder.exception.UserNotFoundException;
@@ -39,7 +37,7 @@ public class UserServiceImpl implements UserService {
 
 	private final ModelMapper modelMapper;
 	private final UserRepository userRepository;
-	private final PasswordEncoder passwordEncoder;
+	//private final PasswordEncoder passwordEncoder;
 
 	@Override
 	public APIResponseDTO addUser(CreateUserForm createUserForm) {
@@ -50,7 +48,7 @@ public class UserServiceImpl implements UserService {
 			throw new ProblemAlreadyExistException(UserConstant.USER_ALREADY_EXISTS);
 		}
  
-		createUserForm.setPassword(passwordEncoder.encode(createUserForm.getPassword()));
+		//createUserForm.setPassword(passwordEncoder.encode(createUserForm.getPassword()));
 		User user = modelMapper.map(createUserForm, User.class);
 		userRepository.save(user);
 		log.debug("User is added"); 

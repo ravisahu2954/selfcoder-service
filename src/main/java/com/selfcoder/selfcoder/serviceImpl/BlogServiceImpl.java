@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import com.selfcoder.selfcoder.dto.APIResponseDTO;
 import com.selfcoder.selfcoder.dto.BlogDTO;
 import com.selfcoder.selfcoder.entity.Blog;
-import com.selfcoder.selfcoder.entity.Comment;
 import com.selfcoder.selfcoder.exception.BlogNotFoundException;
 import com.selfcoder.selfcoder.exception.CustomBadRequestException;
 import com.selfcoder.selfcoder.form.CreateBlogForm;
@@ -88,9 +87,6 @@ public class BlogServiceImpl implements BlogService {
 		if (!opt.isPresent())
 			throw new BlogNotFoundException("Data not found");
 		Blog blog = Blog.convertCreateBlogFormToBlog(id, updateBlogForm);
-		List<Comment> problems = opt.get().getComment();
-		updateBlogForm.getComment().stream().forEach(a -> problems.add(a));
-		blog.setComment(problems);
 		blogRepository.save(blog);
 		log.debug("Blog is added"); // log can be added in classes and enums
 		return APIResponseDTO.builder().timeStamp(System.currentTimeMillis()).message("Set Data").success(true)
